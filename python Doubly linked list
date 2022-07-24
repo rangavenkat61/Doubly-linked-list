@@ -1,0 +1,94 @@
+class node:
+    def __init__(self,data):
+        self.data = data
+        self.next = None
+        self.prev = None
+class Doubly:
+    def __init__(self):
+        self.head = None
+    def is_empty(self):
+        return not self.head
+   #adding node at the back of the linkedlist
+   def add_back(self,new_node):
+        if self.is_empty():
+            self.head = new_node
+        else:
+            n = self.head
+            while n.next != None:
+                n = n.next
+            n.next = new_node
+            new_node.prev = n
+    #adding node at the front of the linkedlist
+    def add_front(self,new_node):
+        if self.is_empty():
+            self.head = new_node
+        else:
+            self.head.prev = new_node
+            new_node.next = self.head
+            self.head = new_node
+            
+    def __str__(self):
+        l = " "
+        t = self.head
+        while t != None:
+            l+=f"{t.data}-->"
+            t = t.next
+        l+="None"
+        return l
+   #adding node at a particular position
+   def add_before(self,target_node,new_node):
+        if self.is_empty():
+            self.head = new_node
+        else:
+            t = self.head
+            while t.data != target_node:
+                prev = t
+                t = t.next
+            new_node.next = prev.next
+            t.prev = new_node
+            new_node.prev = prev
+            prev.next = new_node
+    def remove_first(self):
+        if self.is_empty():
+            print('empty list')
+        self.head = self.head.next
+        
+    def remove_last(self):
+        if self.is_empty():
+            print('empty list')
+        t = self.head
+        while t.next != None:
+            t = t.next
+        t.prev.next = None
+    #removing a particular node
+    def remove_key(self,key):
+        if self.is_empty():
+            print('empty list')
+        else:
+            t = self.head
+            while t.data != key:
+                t = t.next
+            t.prev.next = t.next
+            t.next.prev = t.prev
+            #t.prev.next = t.next
+           
+            
+          
+if __name__ == "__main__":
+    s = Doubly()
+    s.add_front(node(5))
+    s.add_front(node(6))
+    s.add_back(node(4))
+    s.add_front(node(2))
+    s.add_front(node(7))
+    s.add_back(node(8))
+    print(s)
+    s.add_before(4,node(3))
+    print(s)
+    s.remove_first()
+    print(s)
+    s.remove_last()
+    print(s)
+    s.remove_key(3)
+    print(s)
+    
